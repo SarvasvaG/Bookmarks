@@ -100,4 +100,3 @@ class TextExtraction:
 website = 'https://www.cricbuzz.com/'
 text = TextExtraction().text_extract(website)
 # print(text)
-
