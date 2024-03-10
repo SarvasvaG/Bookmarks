@@ -10,15 +10,15 @@ class ScrapTool:
 
     async def visit_url(self, session, website_url):
         try:
-            async with session.get(website_url, timeout=60) as response:
-                if response.status == 403:                              # Check if access is forbidden
-                    print(f"Access to {website_url} is forbidden.")
+            async with session.get(website_url, timeout=10) as response:
+                if response.status == 403:                                      # Check if access is forbidden
+                    # print(f"Access to {website_url} is forbidden.")
                     return {"website_url": website_url, "website_text": "Blocked"}
                 content = await response.read()
                 soup = bs4.BeautifulSoup(content, "lxml")
                 return self.process_soup(soup)
         except (aiohttp.ClientError, asyncio.TimeoutError) as e:
-            print(f"Error accessing {website_url}: {e}")
+            # print(f"Error accessing {website_url}: {e}")
             return None
 
     def process_soup(self, soup):
@@ -50,7 +50,6 @@ class TextExtraction:
         useful_words = [token.text.lower().strip() for token in doc if not token.is_stop and not token.is_punct and not token.text.isnumeric() and token.text.isalnum()]
 
         useful_words = ' '.join(useful_words)
-        # print(type(useful_words))
 
         return useful_words
 
@@ -64,9 +63,6 @@ class TextExtraction:
             else:
                 useful_word_lists.append(['Blocked'])
         
-        # print(type(useful_word_lists))
-        # print(len(useful_word_lists))
-        
         return useful_word_lists
 
 async def main():
@@ -79,7 +75,6 @@ async def main():
 
     text_extraction = TextExtraction()
     useful_word_lists = await text_extraction.extract_text(website_urls)
-    # print(type(useful_word_lists))
 
     for url, useful_words in zip(website_urls, useful_word_lists):
         print(f"Useful words extracted from {url}:\n{useful_words}\n")
