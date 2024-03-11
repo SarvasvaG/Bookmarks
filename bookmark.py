@@ -25,6 +25,7 @@ async def get_tags_for_website(url):
     
     tags=[]
     text = await text_extraction_tool.extract_text([url])
+    
     if text != ['Blocked']:
         tags = text_classifier_tool.assign_tag(text, loaded_model)
     

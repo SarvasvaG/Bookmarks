@@ -52,6 +52,7 @@ class TextExtraction:
 
 
     def extract_useful_words(self, doc):
+        doc=doc[:1000000]
         doc = self.nlp(doc)
         useful_words = [token.text.lower().strip() for token in doc if not token.is_stop and not token.is_punct and not token.text.isnumeric() and token.text.isalnum()]
         useful_words = ' '.join(useful_words)
