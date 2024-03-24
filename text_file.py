@@ -1,4 +1,4 @@
-from textExtraction2 import TextExtraction
+from text_extraction import TextExtraction
 import asyncio
 
 web = ['https://amazon.com/']
