@@ -11,7 +11,7 @@ class WebScrapper:
             f.write(r.text)
 
     def isIrrelevant(self, element):
-        irrelevant_tags = ['header', 'footer', 'aside', 'nav']                 # Add more irrelevant tags if needed
+        irrelevant_tags = ['header', 'footer', 'aside', 'nav']                
         for tag in irrelevant_tags:
             if element.find_parents(tag):
                 return True
@@ -19,15 +19,21 @@ class WebScrapper:
 
     # Title
     def getTitle(self, soup, path):
+        title_return=""
         with open(path, 'w', encoding='utf-8') as f:
             title = soup.title
             title_text = title.get_text().strip()
             if title_text and any(char.isalnum() for char in title_text):
                 f.write(title_text)
                 f.write('\n')
+                
+                title_return+=title_text+"\n"
+        return title_return
+            
 
     # Links
     def getLinkText(self, soup, path):
+        link_return=""
         with open(path, 'w', encoding='utf-8') as f:
             links = soup.find_all('a')
             for link in links:
@@ -36,9 +42,13 @@ class WebScrapper:
                     if link_text and any(char.isalnum() for char in link_text):
                         f.write(link_text)
                         f.write('\n')
+                        
+                        link_return+=link_text+"\n"
+        return link_return
 
     # li-tag
     def getListTagText(self, soup, path):
+        list_return=""
         with open(path, 'w', encoding='utf-8') as f:
             allList = soup.find_all('li')
             for list in allList:
@@ -47,9 +57,13 @@ class WebScrapper:
                     if list_text and any(char.isalnum() for char in list_text):
                         f.write(list_text)
                         f.write('\n')
+                        
+                        list_return+=list_text+"\n"
+        return list_return
 
     # Paragraphs
     def getParagraphText(self, soup, path):
+        para_return=""
         with open(path, 'w', encoding='utf-8') as f:
             allPara = soup.find_all('p')
             for para in allPara:
@@ -58,9 +72,12 @@ class WebScrapper:
                     if para_text and any(char.isalnum() for char in para_text):
                         f.write(para_text)
                         f.write('\n')
+                        para_return+=para_text+"\n"
+        return para_return
 
     # span-tag
     def getSpanTagText(self, soup, path):
+        span_return=""
         with open(path, 'w', encoding='utf-8') as f:
             allSpan = soup.find_all('span')
             for span in allSpan:
@@ -69,29 +86,31 @@ class WebScrapper:
                     if span_text and any(char.isalnum() for char in span_text):
                         f.write(span_text)
                         f.write('\n')
+                        
+                        span_return+=span_text+"\n"
+        return span_return
 
 
-def getContent(url):
+def extract_text(url):
 
     res = requests.get(url, headers=headers).content
     soup = BeautifulSoup(res, 'html.parser')
-    # print(soup.prettify())
     
     Scrapper = WebScrapper()
-
-    # Scrapper.fetchAndSaveToFile(url, './website.html')
     Scrapper.getTitle(soup, './title.txt')
     Scrapper.getLinkText(soup, './link_text.txt')
-    Scrapper.getParagraphText(soup, './para.txt')
+    extracted_text=Scrapper.getParagraphText(soup, './para.txt')
     Scrapper.getSpanTagText(soup, './span-tag.txt')
     Scrapper.getListTagText(soup, './li-tag.txt')
+    
+    return extracted_text
 
 
-# url = "https://www.geeksforgeeks.org/strassens-matrix-multiplication/"
+# # url = "https://www.geeksforgeeks.org/strassens-matrix-multiplication/"
 # url = "https://en.wikipedia.org/wiki/NP-completeness"
-# url = "https://www.theguardian.com/climate-change-and-you/teach-old-soceity-new-tricks"
-# url = "https://www.notion.so/blog/lessons-we-learned-from-launching-notion-ai"
-url = "https://dareobasanjo.medium.com/disruption-comes-to-google-a88d7f32688b"
-
-getContent(url)
+# # url = "https://www.theguardian.com/climate-change-and-you/teach-old-soceity-new-tricks"
+# # url = "https://www.notion.so/blog/lessons-we-learned-from-launching-notion-ai"
+# # url = "https://dareobasanjo.medium.com/disruption-comes-to-google-a88d7f32688b"
+# # url = "https://www.youtube.com/watch?v=Y2wrtZPrct8"
+# extract_text(url)
 
