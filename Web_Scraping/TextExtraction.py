@@ -54,7 +54,7 @@ class WebScrapper:
             allList = soup.find_all('li')
             for list in allList:
                 if not self.isIrrelevant(list):
-                    list_text = list.get_text().strip()
+                    list_text = list.get_text(separator=' ', strip=True).replace('\n', ' ')
                     if list_text and any(char.isalnum() for char in list_text):
                         f.write(list_text)
                         f.write('\n')
@@ -69,7 +69,7 @@ class WebScrapper:
             allPara = soup.find_all('p')
             for para in allPara:
                 if not self.isIrrelevant(para):
-                    para_text = para.get_text().strip()
+                    para_text = para.get_text(separator=' ', strip=True).replace('\n', ' ')
                     if para_text and any(char.isalnum() for char in para_text):
                         f.write(para_text)
                         f.write('\n')
@@ -83,7 +83,7 @@ class WebScrapper:
             allSpan = soup.find_all('span')
             for span in allSpan:
                 if not self.isIrrelevant(span):
-                    span_text = span.get_text().strip()
+                    span_text = span.get_text(separator=' ', strip=True).replace('\n', ' ')
                     if span_text and any(char.isalnum() for char in span_text):
                         f.write(span_text)
                         f.write('\n')
@@ -107,12 +107,12 @@ def extract_text(url):
     return extracted_text
 
 
-# # url = "https://www.geeksforgeeks.org/strassens-matrix-multiplication/"
-# url = "https://en.wikipedia.org/wiki/NP-completeness"
-# # url = "https://www.theguardian.com/climate-change-and-you/teach-old-soceity-new-tricks"
-# # url = "https://www.notion.so/blog/lessons-we-learned-from-launching-notion-ai"
+# url = "https://www.geeksforgeeks.org/strassens-matrix-multiplication/"
+url = "https://en.wikipedia.org/wiki/NP-completeness"
+# url = "https://www.theguardian.com/climate-change-and-you/teach-old-soceity-new-tricks"
+# url = "https://www.notion.so/blog/lessons-we-learned-from-launching-notion-ai"
 # url = "https://dareobasanjo.medium.com/disruption-comes-to-google-a88d7f32688b"
-url = "https://www.youtube.com/watch?v=Y2wrtZPrct8"
+# url = "https://www.youtube.com/watch?v=Y2wrtZPrct8"
 
 print(extract_text(url))
 
