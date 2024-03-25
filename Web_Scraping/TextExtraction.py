@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840 Safari/537.36'}
 
 class WebScrapper:
 
@@ -22,12 +22,13 @@ class WebScrapper:
         title_return=""
         with open(path, 'w', encoding='utf-8') as f:
             title = soup.title
-            title_text = title.get_text().strip()
-            if title_text and any(char.isalnum() for char in title_text):
-                f.write(title_text)
-                f.write('\n')
-                
-                title_return+=title_text+"\n"
+            if title is not None:
+                title_text = title.get_text().strip()
+                if title_text and any(char.isalnum() for char in title_text):
+                    f.write(title_text)
+                    f.write('\n')
+                    
+                    title_return+=title_text+"\n"
         return title_return
             
 
@@ -110,7 +111,8 @@ def extract_text(url):
 # url = "https://en.wikipedia.org/wiki/NP-completeness"
 # # url = "https://www.theguardian.com/climate-change-and-you/teach-old-soceity-new-tricks"
 # # url = "https://www.notion.so/blog/lessons-we-learned-from-launching-notion-ai"
-# # url = "https://dareobasanjo.medium.com/disruption-comes-to-google-a88d7f32688b"
-# # url = "https://www.youtube.com/watch?v=Y2wrtZPrct8"
-# extract_text(url)
+# url = "https://dareobasanjo.medium.com/disruption-comes-to-google-a88d7f32688b"
+url = "https://www.youtube.com/watch?v=Y2wrtZPrct8"
+
+print(extract_text(url))
 
