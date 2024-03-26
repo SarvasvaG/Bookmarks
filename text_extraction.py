@@ -16,16 +16,10 @@ class ScrapTool:
                     return {"website_url": website_url, "website_text": "Blocked"}
                 content = await response.read()
                 soup = bs4.BeautifulSoup(content, "lxml")
-                return self.process_soup(soup)
+                return self.get_text_content(soup)
             
         except (aiohttp.ClientError, asyncio.TimeoutError) as e:
             return None
-
-
-    def process_soup(self, soup):
-        website_text = self.get_text_content(soup)
-        return website_text
-
 
     def get_text_content(self, soup):
         tags_to_ignore = ['style', 'script', 'head', 'title', 'meta', '[document]', "h1", "h2", "h3", "h4", "h5", "h6", "noscript"]

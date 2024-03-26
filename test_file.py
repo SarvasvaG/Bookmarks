@@ -1,7 +1,7 @@
 from text_extraction import TextExtraction
 import asyncio
 
-web = ['https://amazon.com/']
+web = ['https://www.notion.so/blog/how-to-calculate-your-companys-ai-roi-for-real']
 
 async def main():
 
