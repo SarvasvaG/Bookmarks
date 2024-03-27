@@ -19,6 +19,13 @@ class WebScrapper:
 
                     para_return+=para_text+"\n"
         return para_return
+    
+    def getTitle(self, soup):
+        title = soup.title
+        title_text = title.get_text(separator=' ', strip=True).replace('\n', ' ')
+        if title_text and any(char.isalnum() for char in title_text):
+            return title_text
+        
 
 class TextExtraction():
     def __init__(self):
